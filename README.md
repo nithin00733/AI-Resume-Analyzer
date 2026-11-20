@@ -1,176 +1,97 @@
 
-<div align="center">
-
 # 🚀 AI Resume Analyzer
 
-### Smart Resume Skill Detection Using Python & Tkinter
+A Python-based desktop application that analyzes resume content, identifies technical skills, and compares them with a target job description using keyword-based matching.
 
-A simple desktop application that analyzes resume text, detects technical skills, calculates skill coverage, and provides improvement suggestions.
+## 🖥️ Application Preview
 
-<br>
+### Main Dashboard
+![Main Interface](screenshots/main-interface.png)
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
-![Tkinter](https://img.shields.io/badge/GUI-Tkinter-orange)
-![Status](https://img.shields.io/badge/Project-Completed-success)
-![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
+### Resume Analysis Results
+![Analysis Results](screenshots/analysis-results.png)
 
-</div>
+## ✨ Features
 
----
+- 🎨 Modern and colourful Tkinter GUI
+- 🔍 Automatic technical skill detection
+- 📊 Resume skill database coverage
+- 🎯 Job description skill matching
+- 💡 Missing skill identification
+- 📄 Export analysis reports as TXT files
+- 📝 Sample resume and job description
+- 🧹 Clear and reset functionality
 
-## 📌 About The Project
+## 🛠️ Technologies Used
 
-**AI Resume Analyzer** is a Python-based desktop application developed using Tkinter.
-
-It helps students and job seekers identify technical skills mentioned in their resumes. The application compares resume text with a predefined skills database, calculates keyword coverage, and suggests additional skills that may be useful.
-
-The project demonstrates Python programming, GUI development, regular expressions, and text processing.
-
-## ✨ Key Features
-
-| Feature | Description |
+| Technology | Purpose |
 |---|---|
-| 🖥️ User-Friendly GUI | Simple and interactive Tkinter interface |
-| 🔍 Skill Detection | Detects technical skills using regular expressions |
-| 📊 Skill Coverage | Calculates the percentage of supported skills detected |
-| 💡 Skill Suggestions | Displays skills not detected in the resume |
-| ⚡ Instant Analysis | Generates results immediately |
-| 🧹 Clear Option | Resets the input and output sections |
-| 📜 Scrollable Interface | Supports longer resume text and analysis results |
+| Python 3 | Core programming |
+| Tkinter | Desktop GUI |
+| Regular Expressions | Skill detection |
+| datetime | Report timestamps |
 
-## 🛠️ Tech Stack
+**Dependencies:** Python standard library only. No external packages required.
 
-- **Programming Language:** Python 3
-- **GUI Framework:** Tkinter
-- **Text Processing:** String Processing
-- **Pattern Matching:** Regular Expressions (`re`)
-- **GUI Components:** ScrolledText, Buttons, Labels
+## 📚 Supported Skills
 
-## 🎯 Supported Technical Skills
+Python, Java, C, C++, SQL, HTML, CSS, JavaScript, Machine Learning, Deep Learning, Artificial Intelligence, Git, GitHub, Django, Flask, Data Structures, OOP, Tkinter, Pandas, NumPy, Data Analysis, NLP, Scikit-learn, TensorFlow, PyTorch, REST API, MongoDB, MySQL, PostgreSQL and Linux.
 
-The application currently checks for the following skills:
+## ⚙️ Installation and Execution
 
-- Python, Java, C, C++
-- SQL, HTML, CSS, JavaScript
-- Machine Learning, Deep Learning
-- Artificial Intelligence
-- Git, GitHub
-- Django, Flask
-- Data Structures, OOP
-- Tkinter
-- Pandas, NumPy
-- Data Analysis
-
-## ⚙️ How It Works
-
-```text
-       Resume Text
-            |
-            ▼
-     Text Processing
-            |
-            ▼
-    Technical Skill Detection
-            |
-            ▼
-     Keyword Comparison
-            |
-            ▼
-    Skill Coverage Calculation
-            |
-            ▼
-       Final Analysis
-            |
-            ▼
-  Detected Skills & Suggestions
-```
-
-## 📸 Application Screenshots
-
-Screenshots of the application will be added here.
-
-<!-- Add your screenshots inside the screenshots folder -->
-
-## 🚀 Installation & Setup
-
-### Step 1: Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/nithin00733/AI-Resume-Analyzer.git
 ```
 
-### Step 2: Open the Project Folder
+### 2. Open the project folder
 
 ```bash
 cd AI-Resume-Analyzer
 ```
 
-### Step 3: Run the Application
+### 3. Run the application
 
 ```bash
 python ai.py
 ```
 
-## 💻 Application Usage
+## 📊 How It Works
 
-1. Launch the application.
-2. Paste your resume content into the input section.
+1. Enter your resume content.
+2. Optionally enter a target job description.
 3. Click **Analyze Resume**.
-4. View the detected technical skills.
-5. Check the keyword coverage percentage.
-6. Review the additional skill suggestions.
+4. View detected skills and database coverage.
+5. Check the job description match and missing skills.
+6. Export your analysis report.
 
-## 📊 Analysis Details
+## 🧮 Analysis Metrics
 
-The application calculates keyword coverage using the following concept:
+- **Detected Skills:** Number of supported skills found in the resume.
+- **Database Coverage:** Percentage of the application's supported skill database detected.
+- **Job Match:** Percentage of supported job-description skills also detected in the resume.
 
-**Keyword Coverage = (Number of Detected Skills / Total Supported Skills) × 100**
-
-> Note: This percentage measures coverage of the application's predefined skills database. It is not an overall resume quality score or a job suitability score.
+> Note: This application uses rule-based keyword matching, not a trained AI model. The metrics are indicators of keyword presence, not actual skill proficiency or overall resume quality.
 
 ## 🔮 Future Enhancements
 
-- [ ] PDF Resume Upload
-- [ ] Automatic Resume Text Extraction
-- [ ] Job Description Matching
-- [ ] Advanced NLP-Based Analysis
-- [ ] Visual Charts and Analytics
-- [ ] Export Results as PDF
-- [ ] Modern UI using CustomTkinter
+- PDF and DOCX resume extraction
+- Context-aware NLP-based skill identification
+- Expanded technical skill database
+- Improved resume feedback
+- Advanced job-role recommendations
 
-## 🎓 Learning Outcomes
+## 👨‍💻 Developed By
 
-Through this project, I gained practical experience in:
+**Nithin R.**
 
-- Python application development
-- Tkinter GUI programming
-- Regular expressions and pattern matching
-- Text processing and analysis
-- Building interactive desktop applications
-- Git and GitHub version control
+B.E. Computer Science and Engineering (Artificial Intelligence)  
+Sathyabama Institute of Science and Technology
 
-## 👨‍💻 Author
-
-<div align="center">
-
-### Nithin R.
-
-**B.E. Computer Science and Engineering (Artificial Intelligence)**
-
-Aspiring Python Developer | AI & ML Enthusiast
-
-[![GitHub](https://img.shields.io/badge/GitHub-nithin00733-black?logo=github)](https://github.com/nithin00733)
-
-[View My GitHub Profile](https://github.com/nithin00733)
-
-</div>
+- GitHub: [nithin00733](https://github.com/nithin00733)
+- Project: [AI Resume Analyzer](https://github.com/nithin00733/AI-Resume-Analyzer)
 
 ---
 
-<div align="center">
-
-**⭐ If you find this project interesting, consider giving it a star!**
-
-Made with ❤️ using Python
-
-</div>
+⭐ If you find this project useful, consider giving the repository a star!
