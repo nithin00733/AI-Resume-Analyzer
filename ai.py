@@ -1,93 +1,303 @@
 import tkinter as tk
-from tkinter import scrolledtext, messagebox
+from tkinter import ttk, scrolledtext, messagebox
+import re
 
-skills_database = [
-    "python", "java", "c++", "sql",
+# --------------------------------
+# SKILLS DATABASE
+# --------------------------------
+
+SKILLS_DATABASE = [
+    "python", "java", "c", "c++", "sql",
     "html", "css", "javascript",
-    "machine learning", "ai",
-    "git", "github"
+    "machine learning", "deep learning",
+    "artificial intelligence", "ai",
+    "git", "github", "django", "flask",
+    "data structures", "oop", "tkinter",
+    "pandas", "numpy", "data analysis"
 ]
 
-def analyze_resume():
-    resume = resume_text.get("1.0", tk.END).lower()
 
-    if not resume.strip():
-        messagebox.showwarning("Warning", "Please enter resume text.")
+# --------------------------------
+# SKILL DETECTION
+# --------------------------------
+
+def detect_skills(resume):
+    found = []
+
+    for skill in SKILLS_DATABASE:
+        escaped_skill = re.escape(skill)
+        escaped_skill = escaped_skill.replace(r"\ ", r"\s+")
+
+        pattern = r"(?<!\w)" + escaped_skill + r"(?!\w)"
+
+        if re.search(pattern, resume, re.IGNORECASE):
+            found.append(skill)
+
+    return found
+
+
+# --------------------------------
+# RESUME ANALYSIS
+# --------------------------------
+
+def analyze_resume():
+
+    resume = resume_text.get("1.0", tk.END).strip()
+
+    if not resume:
+        messagebox.showwarning(
+            "Warning",
+            "Please enter your resume text."
+        )
         return
 
-    found_skills = []
-
-    for skill in skills_database:
-        if skill in resume:
-            found_skills.append(skill)
-
-    score = min(len(found_skills) * 10, 100)
+    found_skills = detect_skills(resume)
 
     missing_skills = [
-        skill for skill in skills_database
+        skill for skill in SKILLS_DATABASE
         if skill not in found_skills
     ]
 
-    result = f"Resume Score: {score}/100\n\n"
+    total_skills = len(SKILLS_DATABASE)
+    score = (len(found_skills) / total_skills) * 100
 
-    result += "Detected Skills:\n"
-    for skill in found_skills:
-        result += f"✔ {skill}\n"
+    # Build report
+    result = f"""
+RESUME ANALYSIS REPORT
+{'=' * 40}
 
-    result += "\nSuggested Skills:\n"
-    for skill in missing_skills[:5]:
-        result += f"✖ {skill}\n"
+Keyword Coverage: {score:.1f}%
 
-    result += "\nFeedback:\n"
+Skills Detected: {len(found_skills)}
+Skills in Database: {total_skills}
 
-    if score >= 70:
-        result += "Excellent Resume!"
-    elif score >= 40:
-        result += "Good Resume. Add more technical skills."
+{'=' * 40}
+DETECTED SKILLS
+{'=' * 40}
+"""
+
+    if found_skills:
+        for skill in found_skills:
+            result += f"\n  + {skill.title()}"
     else:
-        result += "Needs Improvement."
+        result += "\n  No matching skills detected."
 
+    result += f"""
+
+{'=' * 40}
+OPTIONAL SKILL SUGGESTIONS
+{'=' * 40}
+"""
+
+    if missing_skills:
+        for skill in missing_skills[:8]:
+            result += f"\n  - {skill.title()}"
+    else:
+        result += "\n  No additional database skills to suggest."
+
+    result += f"""
+
+{'=' * 40}
+FEEDBACK
+{'=' * 40}
+
+This report measures keyword coverage only.
+It does not measure overall resume quality.
+
+Include relevant skills only when you genuinely
+have those skills.
+"""
+
+    output_box.configure(state="normal")
     output_box.delete("1.0", tk.END)
-    output_box.insert(tk.END, result)
+    output_box.insert(tk.END, result.strip())
+    output_box.configure(state="disabled")
 
+    score_label.config(
+        text=f"Keyword Coverage: {score:.1f}%"
+    )
+
+
+# --------------------------------
+# CLEAR FUNCTION
+# --------------------------------
+
+def clear_resume():
+
+    resume_text.delete("1.0", tk.END)
+
+    output_box.configure(state="normal")
+    output_box.delete("1.0", tk.END)
+    output_box.configure(state="disabled")
+
+    score_label.config(
+        text="Keyword Coverage: --"
+    )
+
+
+# --------------------------------
+# MAIN WINDOW
+# --------------------------------
 
 root = tk.Tk()
-root.title("AI Resume Analyzer")
-root.geometry("800x600")
+root.title("AI Resume Analyzer - Version 2")
+root.geometry("900x750")
+root.minsize(700, 600)
+root.configure(bg="#f2f5f9")
 
-title = tk.Label(
-    root,
-    text="AI Resume Analyzer",
-    font=("Arial", 20, "bold")
-)
-title.pack(pady=10)
 
-resume_label = tk.Label(
-    root,
-    text="Paste Resume Text Below:"
+# --------------------------------
+# STYLING
+# --------------------------------
+
+style = ttk.Style()
+style.theme_use("clam")
+
+style.configure(
+    "Title.TLabel",
+    font=("Arial", 22, "bold"),
+    background="#f2f5f9",
+    foreground="#183153"
 )
-resume_label.pack()
+
+style.configure(
+    "Action.TButton",
+    font=("Arial", 11, "bold"),
+    padding=10
+)
+
+
+# --------------------------------
+# HEADER
+# --------------------------------
+
+title = ttk.Label(
+    root,
+    text="RESUME KEYWORD ANALYZER",
+    style="Title.TLabel"
+)
+title.pack(pady=(20, 10))
+
+subtitle = ttk.Label(
+    root,
+    text="Analyze resume text and identify technical skills",
+    background="#f2f5f9",
+    font=("Arial", 10)
+)
+subtitle.pack(pady=(0, 15))
+
+
+# --------------------------------
+# RESUME INPUT
+# --------------------------------
+
+input_frame = tk.LabelFrame(
+    root,
+    text=" Resume Text ",
+    font=("Arial", 11, "bold"),
+    bg="#f2f5f9",
+    padx=10,
+    pady=10
+)
+input_frame.pack(
+    fill="both",
+    padx=25,
+    pady=10
+)
 
 resume_text = scrolledtext.ScrolledText(
-    root,
-    width=80,
-    height=15
+    input_frame,
+    height=10,
+    font=("Arial", 11),
+    wrap=tk.WORD
 )
-resume_text.pack(pady=10)
+resume_text.pack(
+    fill="both",
+    expand=True
+)
 
-analyze_btn = tk.Button(
+
+# --------------------------------
+# BUTTONS
+# --------------------------------
+
+button_frame = tk.Frame(
     root,
-    text="Analyze Resume",
-    font=("Arial", 12),
-    command=analyze_resume
+    bg="#f2f5f9"
 )
-analyze_btn.pack(pady=10)
+button_frame.pack(pady=10)
+
+analyze_btn = ttk.Button(
+    button_frame,
+    text="Analyze Resume",
+    command=analyze_resume,
+    style="Action.TButton"
+)
+analyze_btn.pack(
+    side="left",
+    padx=8
+)
+
+clear_btn = ttk.Button(
+    button_frame,
+    text="Clear Resume",
+    command=clear_resume,
+    style="Action.TButton"
+)
+clear_btn.pack(
+    side="left",
+    padx=8
+)
+
+
+# --------------------------------
+# SCORE DISPLAY
+# --------------------------------
+
+score_label = tk.Label(
+    root,
+    text="Keyword Coverage: --",
+    font=("Arial", 14, "bold"),
+    bg="#f2f5f9",
+    fg="#183153"
+)
+score_label.pack(pady=10)
+
+
+# --------------------------------
+# RESULT DISPLAY
+# --------------------------------
+
+result_frame = tk.LabelFrame(
+    root,
+    text=" Analysis Results ",
+    font=("Arial", 11, "bold"),
+    bg="#f2f5f9",
+    padx=10,
+    pady=10
+)
+result_frame.pack(
+    fill="both",
+    expand=True,
+    padx=25,
+    pady=10
+)
 
 output_box = scrolledtext.ScrolledText(
-    root,
-    width=80,
-    height=15
+    result_frame,
+    height=12,
+    font=("Consolas", 10),
+    wrap=tk.WORD,
+    state="disabled"
 )
-output_box.pack(pady=10)
+output_box.pack(
+    fill="both",
+    expand=True
+)
+
+
+# --------------------------------
+# RUN APPLICATION
+# --------------------------------
 
 root.mainloop()
